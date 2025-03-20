@@ -1,0 +1,6 @@
+Lab 1: Username enumeration via different responses
+
+Target goal: Enumerate a valid username and password to access the application.
+
+we have to use bruteforce attack using burp intruder, and if we found 302 status code
+then it means we got out username and password
