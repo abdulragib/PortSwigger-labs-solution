@@ -1,0 +1,9 @@
+Lab #4: Username enumeration via subtly different responses
+
+Main Goal: 
+
+Enumeration of username and password 
+
+Analysis:
+
+We need to use Burp intruder to bruteforce username and password

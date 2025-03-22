@@ -1,0 +1,9 @@
+
+Lab 3: Password reset broken logic
+
+Goal : reset password for carlos and login carlos's account
+
+Use Burp to see the request of setting new password for wiener and we use same request
+to change password for carlos , just change the temp-forgot-password-token and change
+username to wiener to carlos then we got response 302 , we are able to login
+

@@ -1,0 +1,15 @@
+Lab #5: Username enumeration via response timing
+
+Main goal : Brute force the username and password according to response time
+
+Analysis:
+
+Summary:
+In this lab , we use x-forward-for to spoof ip address for bypassing the ip protection
+and we use burp intruder to brute force the username according to the 
+response time , we need to update the value of x-forward-for to bypass the ip protection
+and for that we use pitchfork attack in burp intruder, we have to set the wrong
+password with more than 100 character, so if username is correct then it will take time to 
+verify password and we can confirm correct username, if the response time is high
+then we got the username and if we got 302 means then we got username and password 
+both
