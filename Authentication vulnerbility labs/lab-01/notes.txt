@@ -4,11 +4,3 @@ Target goal: Enumerate a valid username and password to access the application.
 
 we have to use bruteforce attack using burp intruder, and if we found 302 status code
 then it means we got out username and password
-
-Explanation:
-
-Select * from products where category = 'Pets' And release =1 
-select * products where category = ''' and released=1
-select * from products where category = ''--' and released=1
-select * from products where category = ''
-select * from products where category = '' or 1=1 --' and released=1
